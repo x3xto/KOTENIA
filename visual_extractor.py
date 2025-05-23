@@ -1,6 +1,5 @@
 from google import genai
 from google.genai import types
-import os
 import json
 
 from config import api_key

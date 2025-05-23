@@ -1,6 +1,5 @@
 import os
 import json
-from datetime import datetime
 from visual_extractor import VisualOSINTAnalyzer
 from secondary_analysis import conduct_secondary_analysis_with_gemini
 from config import serapi_key
