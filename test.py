@@ -6,11 +6,9 @@ from pathlib import Path
 NUULS_UPLOAD_ENDPOINT = "https://i.nuuls.com/upload"
 
 def upload_image_get_url(image_path: str) -> str | None:
-    """
-    Завантажує файл на nuuls.com і повертає URL завантаженого зображення.
-    """
+
     if not Path(image_path).is_file():
-        print(f"[Error] Файл не знайдено: {image_path}")
+        print(f"[Error] File not found: {image_path}")
         return None
 
     try:
@@ -22,29 +20,27 @@ def upload_image_get_url(image_path: str) -> str | None:
             text = resp.text.strip()
             print(f"[Debug] Nuuls response text: {text}")
 
-            # Якщо відповідь — URL, повертаємо його
             if text.startswith("http://") or text.startswith("https://"):
-                print(f"[Info] Отримано URL: {text}")
+                print(f"[Info] Received URL: {text}")
                 return text
 
-            # Інакше намагаємося JSON (fallback)
             try:
                 data = resp.json()
                 if isinstance(data, list) and data and "id" in data[0]:
                     url = f"https://i.nuuls.com/{data[0]['id']}"
-                    print(f"[Info] Отримано URL із JSON: {url}")
+                    print(f"[Info] Received URL from JSON: {url}")
                     return url
             except ValueError:
                 pass
 
             print("[Error] Unexpected response format from Nuuls.")
     except Exception as e:
-        print(f"[Error] Помилка при завантаженні: {e}")
+        print(f"[Error] Error on upload: {e}")
     return None
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
-        print(f"Використання: {sys.argv[0]} <path_to_image>")
+        print(f"Usage: {sys.argv[0]} <path_to_image>")
         sys.exit(1)
 
     image_path = sys.argv[1]
