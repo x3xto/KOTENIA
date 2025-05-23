@@ -4,3 +4,4 @@ Also don't forget to paste your API keys.
 """
 
 api_key="your-api-key-here" #https://ai.google.dev/gemini-api/docs
+serapi_key="your-api-key-here" #https://serpapi.com/manage-api-key
