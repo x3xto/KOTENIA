@@ -1,14 +1,14 @@
 import os
 import json
 from first_analysis import VisualOSINTAnalyzer
-from secondary_analysis import conduct_secondary_analysis_with_gemini
+from secondary_analysis import conduct_secondary_analysis
 from config import serapi_key
-from image_search import upload_image_get_url, lens_search_image
-from utils import extract_country_code_from_secondary_result
+from image_search import lens_search_image
+from utils import extract_country_code, upload_image_get_url
 
 IMAGE_PATH = r"D:\\photo_2025-04-10_02-34-04.jpg"
 OUTPUT_DIR = "output"
-OUTPUT_PATH = os.path.join(OUTPUT_DIR, "result.json")
+OUTPUT_PATH = os.path.join(OUTPUT_DIR, "first_result.json")
 SECONDARY_PATH = os.path.join(OUTPUT_DIR, "secondary_result.json")
 LENS_PATH = os.path.join(OUTPUT_DIR, "lens_results.json")
 
@@ -30,7 +30,7 @@ if __name__ == "__main__":
         print("[OK] Primary analysis saved to:", OUTPUT_PATH)
         print("\n[Parsed Output]\n", json.dumps(result, indent=2, ensure_ascii=False))
 
-    secondary_result = conduct_secondary_analysis_with_gemini(IMAGE_PATH, result)
+    secondary_result = conduct_secondary_analysis(IMAGE_PATH, result)
     if secondary_result:
         with open(SECONDARY_PATH, "w", encoding="utf-8") as f:
             json.dump(secondary_result, f, indent=2, ensure_ascii=False)
@@ -43,7 +43,7 @@ if __name__ == "__main__":
     print("\n[Step 3] Uploading image and searching through Lens.")
     image_url = upload_image_get_url(IMAGE_PATH)
     if image_url:
-        predicted_country = extract_country_code_from_secondary_result(secondary_result)
+        predicted_country = extract_country_code(secondary_result)
         lens_results = lens_search_image(image_url, serapi_key, country=predicted_country)
         if lens_results:
             with open(LENS_PATH, "w", encoding="utf-8") as f:

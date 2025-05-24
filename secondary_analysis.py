@@ -7,7 +7,7 @@ from utils import extract_json_block
 
 client = genai.Client(api_key=api_key)
 
-def conduct_secondary_analysis_with_gemini(image_path: str, initial_analysis_json: dict) -> Optional[dict]:
+def conduct_secondary_analysis(image_path: str, initial_analysis_json: dict) -> Optional[dict]:
     print("\n[Step 2] Secondary analysis with image and JSON.")
 
     try:
