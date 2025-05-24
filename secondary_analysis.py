@@ -33,6 +33,7 @@ Please return a JSON object with the following structure:
   "new_location_hypotheses": [
     {{
       "location_hypothesis": "...",
+      "predicted_country_code": "2 symbols, like us, ua, ru",
       "confidence": "High | Medium | Low",
       "justification": "...",
       "verification_steps": ["...", "..."]
