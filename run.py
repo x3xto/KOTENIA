@@ -4,7 +4,7 @@ from first_analysis import VisualOSINTAnalyzer
 from secondary_analysis import conduct_secondary_analysis
 from config import serapi_key
 from image_search import lens_search_image
-from utils import extract_country_code, upload_image_get_url
+import utils
 
 IMAGE_PATH = r"D:\\photo_2025-04-10_02-34-04.jpg"
 OUTPUT_DIR = "output"
@@ -40,10 +40,13 @@ if __name__ == "__main__":
         print("[Step 2] Secondary analysis failed.")
         exit(1)
 
+    parsed_coordinates = utils.parse_bounding_box_coordinates(result)
+    print(parsed_coordinates)
+
     print("\n[Step 3] Uploading image and searching through Lens.")
-    image_url = upload_image_get_url(IMAGE_PATH)
+    image_url = utils.upload_image_get_url(IMAGE_PATH)
     if image_url:
-        predicted_country = extract_country_code(secondary_result)
+        predicted_country = utils.extract_country_code(secondary_result)
         lens_results = lens_search_image(image_url, serapi_key, country=predicted_country)
         if lens_results:
             with open(LENS_PATH, "w", encoding="utf-8") as f:
