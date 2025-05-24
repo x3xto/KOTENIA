@@ -1,6 +1,4 @@
 import re
-import json
-from typing import Optional
 
 def extract_json_block(text: str) -> str:
     match = re.search(r"```json\s*(.*?)\s*```", text, re.DOTALL)

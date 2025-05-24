@@ -1,6 +1,7 @@
 from google import genai
 from google.genai import types
 import json
+from utils import extract_json_block
 
 from config import api_key
 
@@ -23,20 +24,12 @@ class VisualOSINTAnalyzer:
             )
 
             raw_text = response.text or ""
-            clean_json = self._extract_json(raw_text)
+            clean_json = extract_json_block(raw_text)
             return json.loads(clean_json)
 
         except Exception as e:
             print(f"[Error] Analysis failed: {e}")
             return {"error": str(e)}
-
-    def _extract_json(self, text: str) -> str:
-        if "```json" in text:
-            try:
-                return text.split("```json")[1].split("```")[0].strip()
-            except IndexError:
-                return text.strip()
-        return text.strip()
 
     def _get_prompt(self) -> str:
         return """

@@ -1,56 +1,53 @@
 import requests
-import sys
 from pathlib import Path
-from serpapi import GoogleSearch
-from utils import extract_country_code_from_secondary_result
-from typing import List, Dict, Optional
+from typing import Optional
 
 NUULS_UPLOAD_ENDPOINT = "https://i.nuuls.com/upload"
 
 def upload_image_get_url(image_path: str) -> str | None:
     if not Path(image_path).is_file():
-        print(f"[Uploader] Помилка: Файл не знайдено: {image_path}")
+        print(f"[Uploader] Error: File not found: {image_path}")
         return None
 
     try:
         with open(image_path, "rb") as f:
             files = {"file": f}
-            print(f"[Uploader] Відправляємо POST-запит на {NUULS_UPLOAD_ENDPOINT}...")
+            print(f"[Uploader] Sending POST-request on {NUULS_UPLOAD_ENDPOINT}...")
             resp = requests.post(NUULS_UPLOAD_ENDPOINT, files=files, timeout=30)
             print(f"[Uploader] HTTP Status: {resp.status_code} {resp.reason}")
 
             if resp.status_code == 200:
                 text = resp.text.strip()
-                print(f"[Uploader] Текст відповіді від Nuuls: {text}")
+                print(f"[Uploader] Answer from Nuuls: {text}")
                 if text.startswith("http://") or text.startswith("https://"):
-                    print(f"[Uploader] URL отримано (текстова відповідь): {text}")
+                    print(f"[Uploader] URL received (text answer): {text}")
                     return text
                 try:
                     data = resp.json()
                     if isinstance(data, list) and data and "id" in data[0] and data[0]["id"]:
                         url = f"https://i.nuuls.com/{data[0]['id']}"
-                        print(f"[Uploader] URL отримано (JSON відповідь): {url}")
+                        print(f"[Uploader] URL received (JSON answer): {url}")
                         return url
                     else:
-                        print(f"[Uploader] Неочікуваний формат JSON: {data}")
+                        print(f"[Uploader] Unexpected JSON format: {data}")
                 except requests.exceptions.JSONDecodeError:
-                    print(f"[Uploader] Відповідь не є валідним JSON, хоча статус 200. Текст: {text}")
+                    print(f"[Uploader] Answer is not valid JSON, but status code = 200. Desc: {text}")
                 except Exception as e_json:
-                    print(f"[Uploader] Помилка обробки JSON відповіді: {e_json}")
+                    print(f"[Uploader] Error processing JSON: {e_json}")
             else:
-                print(f"[Uploader] Помилка сервера Nuuls. Текст відповіді: {resp.text[:500]}")
+                print(f"[Uploader] Server error. Response: {resp.text[:500]}")
     except requests.exceptions.RequestException as e:
-        print(f"[Uploader] Помилка завантаження на Nuuls (requests exception): {e}")
+        print(f"[Uploader] Error uploading file (requests exception): {e}")
     except Exception as e:
-        print(f"[Uploader] Загальна помилка під час завантаження: {e}")
+        print(f"[Uploader] Error: {e}")
     return None
 
 def lens_search_image(image_url: str, serpapi_key: str, country: Optional[str] = None) -> Optional[dict]:
     if not image_url:
-        print("[Lens] Не надано URL зображення для пошуку.")
+        print("[Lens] No URL to search.")
         return None
     try:
-        print(f"[Lens] Виконуємо пошук для URL: {image_url}")
+        print(f"[Lens] Searching image by URL: {image_url}")
         lens_url = "https://serpapi.com/search.json"
         params = {
             "engine": "google_lens",
@@ -61,10 +58,10 @@ def lens_search_image(image_url: str, serpapi_key: str, country: Optional[str] =
         response = requests.get(lens_url, params=params, timeout=30)
         response.raise_for_status()
         data = response.json()
-        print("[Lens] Пошук успішний.")
+        print("[Lens] Success.")
         return data
     except requests.RequestException as e:
-        print(f"[Lens] HTTP помилка: {e}")
+        print(f"[Lens] HTTP error: {e}")
     except ValueError as e:
-        print(f"[Lens] Помилка JSON-декодування: {e}")
+        print(f"[Lens] Error JSON-decoding: {e}")
     return None
