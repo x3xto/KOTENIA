@@ -5,7 +5,7 @@ from utils import extract_json_block
 from config import api_key
 
 class VisualOSINTAnalyzer:
-    def __init__(self, model="gemini-2.0-flash"):
+    def __init__(self, model="gemini-2.5-pro-preview-05-06"): # gemini-2.0-flash
         self.client = genai.Client(api_key=api_key)
         self.model = model
 

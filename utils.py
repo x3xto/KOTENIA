@@ -103,3 +103,14 @@ def parse_bounding_box_coordinates(analysis_result: dict) -> dict:
         print("[Parser] No valid coordinates.")
         
     return parsed_coordinates
+
+def aggregate_fragment_results(directory: str) -> list:
+    results = []
+    for file in Path(directory).glob("lens_fragment_*.json"):
+        try:
+            with open(file, "r", encoding="utf-8") as f:
+                data = json.load(f)
+                results.append({"filename": file.name, "data": data})
+        except Exception as e:
+            print(f"[Utils] Failed to read {file}: {e}")
+    return results
