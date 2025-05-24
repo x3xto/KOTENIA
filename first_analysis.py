@@ -2,7 +2,6 @@ from google import genai
 from google.genai import types
 import json
 from utils import extract_json_block
-
 from config import api_key
 
 class VisualOSINTAnalyzer:
@@ -44,4 +43,14 @@ Based on your comprehensive visual analysis, generate a structured report in JSO
 5.  unique_identifiers_and_osint_value: Identify any truly unique visual identifiers (e.g., specific brand logos, rare object models, distinctive building features). For each, explain its potential value or direction for further OSINT investigation.
 6.  contextual_inferences: Offer a concise assessment of the scene's likely context or nature. Make logical inferences about the broader situation or activity depicted, strictly based on the visual evidence.
 Ensure your analysis is strictly based on the visual information and general knowledge, maintaining objectivity and avoiding speculation or generation of private/non-public data.
+7.  identifier_bounding_boxes: For each key unique visual identifier (like logos, specific text snippets on signs, distinct objects), if possible, provide approximate bounding box coordinates. The coordinates should define a rectangle around the identifier. If precise bounding boxes are not possible, provide a general description of the area occupied by the identifier.
+Use this format for coordinates:
+    "UNIQUE_IDENTIFIER_NAME_1": {
+      "description": "Brief description of what this identifier is.",
+      "coordinates": {
+        "x_min": "INTEGER_VALUE",
+        "y_min": "INTEGER_VALUE",
+        "x_max": "INTEGER_VALUE",
+        "y_max": "INTEGER_VALUE"
+      }
 """

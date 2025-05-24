@@ -1,5 +1,6 @@
 from pathlib import Path
 import requests
+import json
 import re
 
 NUULS_UPLOAD_ENDPOINT = "https://i.nuuls.com/upload"
@@ -57,3 +58,48 @@ def extract_country_code(secondary_result: dict) -> str | None:
         if code:
             return code.lower()
     return None
+
+def parse_bounding_box_coordinates(analysis_result: dict) -> dict:
+    parsed_coordinates = {}
+    if not isinstance(analysis_result, dict):
+        print("[Parser] Error: Input is not a dictionary.")
+        return parsed_coordinates
+
+    bounding_boxes_data = analysis_result.get("identifier_bounding_boxes")
+
+    if not isinstance(bounding_boxes_data, dict):
+        print("[Parser] Warning: Key 'identifier_bounding_boxes' not found or it's not a dictionary.")
+        return parsed_coordinates
+
+    for identifier_name, data in bounding_boxes_data.items():
+        if isinstance(data, dict) and "coordinates" in data:
+            coords = data.get("coordinates")
+            if (isinstance(coords, dict) and
+                    "x_min" in coords and "y_min" in coords and
+                    "x_max" in coords and "y_max" in coords):
+                
+                try:
+                    x_min = int(coords["x_min"])
+                    y_min = int(coords["y_min"])
+                    x_max = int(coords["x_max"])
+                    y_max = int(coords["y_max"])
+                    
+                    parsed_coordinates[identifier_name] = {
+                        "description": data.get("description", "N/A"),
+                        "x_min": x_min,
+                        "y_min": y_min,
+                        "x_max": x_max,
+                        "y_max": y_max
+                    }
+                    print(f"[Parser] Found coordinates for '{identifier_name}': x_min {x_min}, y_min {y_min}, x_max {x_max}, y_max {y_max}")
+                except (ValueError, TypeError) as e:
+                    print(f"[Parser] Error converting coordinates for '{identifier_name}': {e}. Skipping.")
+            else:
+                print(f"[Parser] Warning: Invalid format for '{identifier_name}'. Skipping.")
+        else:
+            print(f"[Parser] Warning: No data for '{identifier_name}'. Skipping.")
+            
+    if not parsed_coordinates:
+        print("[Parser] No valid coordinates.")
+        
+    return parsed_coordinates
