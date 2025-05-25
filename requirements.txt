@@ -1,0 +1,5 @@
+google-genai
+google-search-results
+Pillow
+requests
+rich

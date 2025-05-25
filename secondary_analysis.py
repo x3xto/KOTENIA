@@ -46,18 +46,25 @@ Your Comprehensive Analytical Task:
 
 Based on all the provided data (both the initial full image analysis and the fragment search results):
 
-Identify Prime Geolocational Indicators (Synthesized): From both JSON inputs, identify the top 3-5 individual or combined visual/textual cues that you now believe are MOST critical for geolocation. List them and explain why their combination is significant.
+Identify Prime Geolocational Indicators (Synthesized): From both JSON inputs, identify the top 3-5 
+individual or combined visual/textual cues that you now believe are MOST critical for geolocation. 
+List them and explain why their combination is significant.
 Cross-Correlation and Synthesis:
-Analyze: How do the reverse_image_search_results for each fragment_identifier (from fragment_search_results_json_array) correlate with, confirm, contradict, or add new details to the findings in the initial_image_analysis_json (especially geolocation_analysis, ocr_text_and_context, and unique_identifiers_and_osint_value)?
+Analyze: How do the reverse_image_search_results for each fragment_identifier (from fragment_search_results_json_array) 
+correlate with, confirm, contradict, or add new details to the findings in the initial_image_analysis_json (especially 
+geolocation_analysis, ocr_text_and_context, and unique_identifiers_and_osint_value)?
 Pay close attention to titles, snippets, and linked pages from the fragment search results.
-Refined Hypothesis (Overall Context): Based on this cross-correlation, provide a refined overall hypothesis about the original image's context and potential origin.
+Refined Hypothesis (Overall Context): Based on this cross-correlation, provide a refined overall hypothesis about the 
+original image's context and potential origin.
 New Specific Location Hypotheses (Enhanced by Fragment Data):
-Based on your comprehensive synthesis (initial analysis + all fragment search results), propose 1-3 NEW or significantly REFINED, specific, and plausible geographic location hypotheses for the original image.
+Based on your comprehensive synthesis (initial analysis + all fragment search results), propose 1-3 NEW or significantly 
+REFINED, specific, and plausible geographic location hypotheses for the original image.
 For each hypothesis:
 location_hypothesis: (e.g., specific city, region, or even type of neighborhood).
 predicted_country_code: (A 2-letter ISO country code, e.g., "UA", "IT", "PL").
 confidence: ("High" | "Medium" | "Low").
-justification: Detailed explanation of how the combined evidence (initial image + fragment search results) supports this specific hypothesis. Explicitly mention how fragment search data helped narrow down or confirm aspects.
+justification: Detailed explanation of how the combined evidence (initial image + fragment search results) supports this specific 
+hypothesis. Explicitly mention how fragment search data helped narrow down or confirm aspects.
 verification_steps: Concrete, actionable steps or specific search queries a human analyst could perform to verify or refute this hypothesis.
 Updated Intelligence Brief (Synthesized):
 Provide a concise intelligence brief (max 200 words) summarizing the most critical observations, the strongest synthesized location hypothesis(es) with confidence levels, and key supporting evidence from all provided data sources.
