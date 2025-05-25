@@ -13,7 +13,7 @@
  ((_/`(____,-'
 ```
 
-**KOTENIA** stands for **Key Object & Text Extraction, Networking, and Integrated Analytics**. This Proof of Concept (PoC) is developed as part of a master's thesis project, demonstrating an end-to-end OSINT pipeline for visual intelligence analysis.
+**KOTENIA** stands for **Key Object & Text Extraction, Networking, and Integrated Analytics**. This Proof of Concept (PoC) is developed as part of a bachelor's thesis project, demonstrating an end-to-end OSINT pipeline for visual intelligence analysis.
 
 ## Features
 
@@ -41,7 +41,7 @@
 3. **Configure API keys**
 
    * Copy `config_example.py` to `config.py`
-   * Insert your `api_key` (for Gemini) and `serapi_key` (SerpAPI (Google Lens))
+   * Insert your `api_key` (for Gemini) and `serapi_key` (SerpAPI for Google Lens search)
 
 4. **Run the pipeline**
 
@@ -51,7 +51,3 @@
 
    * The program will clear the `output/` folder, process the image, and save `output/summary.json`.
    * View the formatted summary directly in your terminal.
-
-## License
-
-This PoC is available under the MIT License. See `LICENSE` for details.
