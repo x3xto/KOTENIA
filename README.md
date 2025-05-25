@@ -17,11 +17,10 @@
 
 ## Features
 
-* **Image Analysis:** Leverages a large vision-language model to extract detailed descriptions, entities, OCR text, and geolocation hypotheses from input images.
+* **Image Analysis:** Leverages a large vision-language model Google Gemini 2.5 Pro) to extract detailed descriptions, entities, OCR text, and geolocation hypotheses from input images.
 * **Fragment Extraction:** Automatically crops and uploads key visual fragments (logos, signs, text) for reverse image searches.
-* **Networking & Search:** Integrates with Google Lens (or similar) to enrich analysis with open-source data.
+* **Networking & Search:** Integrates with Google Lens to enrich analysis with open-source data.
 * **Structured Summaries:** Aggregates all results and synthesizes a concise intelligence report in JSON format.
-* **Terminal UI:** Provides a rich terminal interface with animated ASCII art and formatted tables for easy readability.
 
 ## Getting Started
 
@@ -42,6 +41,10 @@
 
    * Copy `config_example.py` to `config.py`
    * Insert your `api_key` (for Gemini) and `serapi_key` (SerpAPI for Google Lens search)
+   
+   You can get your API keys from this sources respectively:
+   + https://ai.google.dev/gemini-api/docs
+   + https://serpapi.com/manage-api-key
 
 4. **Run the pipeline**
 
@@ -49,5 +52,5 @@
    python summary.py <path_to_image>
    ```
 
-   * The program will clear the `output/` folder, process the image, and save `output/summary.json`.
+   * At start the program will clear the `output/` folder from any old data, process the image, and save `output/summary.json`.
    * View the formatted summary directly in your terminal.
